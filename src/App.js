@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from "./Navbar";
 import RoomMenu from "./room/RoomMenu";
-import Some from "./Some";
+import Room from "./room/Room";
 
 class App extends Component {
 
@@ -14,7 +14,7 @@ class App extends Component {
                    <Router>
                         <Switch>
                             <Route exact path="/" component={RoomMenu}/>
-                            <Route path="/some" component={Some}/>
+                            <Route path="/room/:id" component={Room}/>
                         </Switch>
                     </Router>
                 </div>

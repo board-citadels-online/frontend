@@ -1,10 +1,14 @@
 import React, {Component} from "react";
 import axios from "axios";
+import RoomListRow from "./RoomListRow";
+import {withRouter} from "react-router-dom";
 
 class RoomList extends Component {
 
     constructor(props) {
         super(props);
+
+        this.onSelect = this.onSelect.bind(this);
 
         this.state = {
             rooms: []
@@ -35,17 +39,22 @@ class RoomList extends Component {
                 <tbody>
                 {
                     rooms.map(room =>
-                        <tr key={room.id}>
-                            <td>{room.name}</td>
-                            <td/>
-                            <td>{room.slots.free}/{room.slots.total}</td>
-                        </tr>
+                        <RoomListRow
+                            key={room.id}
+                            room={room}
+                            onSelect={this.onSelect}
+                        />
                     )
                 }
                 </tbody>
             </table>
         );
     }
+
+    onSelect(id) {
+        const {history} = this.props;
+        history.push(`/room/${id}`);
+    }
 }
 
-export default RoomList;
+export default withRouter(RoomList);

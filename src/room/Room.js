@@ -1,23 +1,38 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
+import axios from 'axios';
 
 class Room extends Component {
 
-    static propTypes = {
-        roomInfo: PropTypes.instanceOf(RoomInfo).isRequired
-    };
-
     constructor(props) {
         super(props);
+
+        this.state = {
+            roomInfo: null
+        }
+    }
+
+    componentDidMount() {
+        const {id} = this.props.match.params;
+
+        axios.get(`/api/room/${id}`)
+            .then(response => {
+                this.setState({
+                    roomInfo: response.data
+                });
+            });
     }
 
     render() {
-        const {roomInfo} = this.props as RoomInfo;
+        const {roomInfo} = this.state;
+
+        if(!roomInfo) {
+            return <div/>
+        }
 
         return (
             <div>
-                <span>Id: {roomInfo.id}</span>
-                <span>Name: {roomInfo.name}</span>
+                <h3>Id: {roomInfo.id}</h3>
+                <h3>Name: {roomInfo.name}</h3>
             </div>
         );
     }
